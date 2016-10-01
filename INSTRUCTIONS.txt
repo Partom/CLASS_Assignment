@@ -1,0 +1,1 @@
+there is a bug in the system if you want to add new categories the id which is supposed to auto increment but it  cannot be random i.e if a number from middle is missing it wont work all the ids of of table  named "category_details" should be in alphabetical order and no number should be skipped.

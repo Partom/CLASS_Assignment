@@ -1,0 +1,22 @@
+#tableg{
+    border:1px solid #E3E3E3;
+}
+#tableg tr{
+   border:1px solid #E3E3E3;
+}
+#tableg tr td{
+   border:1px solid #E3E3E3;
+    text-align: center;
+    vertical-align: middle;
+}
+#tableg tr th{
+    border:1px solid #E3E3E3;
+    background-color: white;
+}
+
+#tableg tr:nth-child(even){
+   background-color: #f9f9f9;
+}
+#tableg tr:nth-child(odd){
+   background-color: white;
+}
