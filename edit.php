@@ -69,31 +69,40 @@
         
             if(isset($_POST['add'])){
           
-                               
-                //checkbox
-                  $q =  "select category_id , name  from category_details ";
-            $return = mysql_query($q);
+      
                 
-                 $num_of_rows = mysql_num_rows($return);
+                         // query for getting all categories available
+                $cq ="select category_id , name from category_details ; ";
+                $cqq = mysql_query($cq);
+                $arr[]="";
+                   $counter =0;
+                   // array of all categories named arr and also count number of entries for using 'for' loops               
+                   while( $record_one = mysql_fetch_array($cqq)){
+                      $arr[] = $record_one;
+                      $counter++;
+                   } //print_r($arr);
+                   
                
-     for($i=1 ; $i <= $num_of_rows ; $i++){ 
+     for($i=1 ; $i <= $counter ; $i++){ 
          
         
-        if(isset($_POST[''.$i.''])){
-           
-            $qp = "select * from categories where book_id = '".$id."' and category_id = '".$i."' ;";
+        if(isset($_POST["".$arr[$i][1].""])){
+           echo $arr[$i][1];
+            $qp = "select * from categories where book_id = '".$id."' and category_id = '".$arr[$i][0]."' ;";
             $rett = mysql_query($qp);
               $rr =   mysql_num_rows($rett);
             if ( $rr >= 1){  // returned mans result exist
                 
             }else{
                // echo "</br>insersion detexted<br>";
-            $catq = "insert into categories (book_id , category_id ) values( '".$_GET['id']."' , '".$i."' )";
+            $catq = "insert into categories (book_id , category_id ) values( '".$_GET['id']."' , '".$arr[$i][0]."' )";
             mysql_query($catq);
             }
+            
+            header("Location: #");
         }else{
         
-         $catq = "delete from categories where book_id = '".$_GET['id']."' and category_id = '".$i."' ;";
+         $catq = "delete from categories where book_id = '".$_GET['id']."' and category_id = '".$arr[$i][0]."' ;";
          // echo $catq."<br>";
             mysql_query($catq);
      }
@@ -211,8 +220,9 @@
             
             
             <?php
-                
-                $qq = "select category_id from categories where book_id = '".$id."' ;";      
+             
+                 /*with id*/
+               /*   $qq = "select category_id from categories where book_id = '".$id."' ;";      
                    
                  $r =   mysql_query($qq);
                    $a[] = "";
@@ -246,11 +256,73 @@
                         <input type="checkbox" '.$checked.' name="'.$get[0].'" />'.$get[1].'
                        ';
                                             
-                   }
+                   } */
                  //  print_r($a);
                  //  print_r($allcs);
-                 
+                 /*with name*/
              
+    
+    
+                // query for getting all categories available
+                $cq ="select category_id , name from category_details ; ";
+                $cqq = mysql_query($cq);
+                   $counter =0;
+                   // array of all categories named arr and also count number of entries for using 'for' loops               
+                   while( $record_one = mysql_fetch_array($cqq)){
+                      $arr[] = $record_one;
+                      $counter++;
+                   } //print_r($arr);
+                   
+                   
+                  // echo $counter;
+                  // echo $arr[3][1];
+                 //print_r($arr);
+                   
+                   // get specific categories  ids for this book
+                    $q = "select category_id from categories where  book_id = '".$id."' ;";
+                    $qr = mysql_query($q);
+                    $used[]="";
+                   $nb = 0;
+                    while($first =  mysql_fetch_array($qr)){
+                    //  echo $first[0];
+                     //   echo $arr[5][1];
+                       // echo $arr[$first[0]-2][1];
+                       $used_id[] = $first[0];
+                       $nb++;
+                    }
+                  // echo $nb;
+                   
+                 //print_r($used_id);
+                  
+                   for($k =0 ; $k<$nb; $k++){
+                       
+                       $q =  "select name from category_details where category_id = '".$used_id[$k]."' ;";
+                       $qer = mysql_query($q);
+                       $name_of_cat = mysql_fetch_array($qer);
+                       $used[] = $name_of_cat[0];
+                       
+                   }
+                   
+                 // print_r($used); 
+                   // print all categories
+                  // echo $arr[0][1];
+                  // print_r($used); 
+                   $checked = "";
+                   for($i=0; $i < $counter ; $i++){  //in each category 6 times
+                             $checked = "";                //check for the match with the name of used
+                        for($j = 1 ; $j <= $nb  ; $j++){ //i.e 2 times
+                            
+                          //echo $arr[$i][1]." == ".$used[$j]." :" ;  
+                                if($arr[$i][1] ==  $used[$j]){
+                                    $checked = "checked";
+                                    break;
+                                }
+                        }
+                     // echo "name='".$arr[$i][1]."' >".$arr[$i][1]."<br>";
+                      echo "<input type='checkbox' ".$checked." name= \"".$arr[$i][1]."\" >".$arr[$i][1] ;
+                    }
+    
+    
                    
             ?>
           

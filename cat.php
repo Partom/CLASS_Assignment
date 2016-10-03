@@ -27,6 +27,10 @@
             if(isset($_POST['del'])){
                 $to_be_del = $_POST['sel'];
                echo $to_be_del;
+                
+                $qgk = "DELETE FROM `categories` WHERE category_id = (select category_id from category_details WHERE name = '".$to_be_del."' )";
+                mysql_query($qgk);
+                
                 $qq = "delete from category_details where name= '".mysql_real_escape_string($to_be_del)."' ;";
               $gg=  mysql_query($qq);
                 if($gg){

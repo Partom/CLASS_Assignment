@@ -77,7 +77,7 @@
         </table>
 		
         <a href="add.php"><input type="submit" name="add" value="Add New Books" class="btn btn-success"  ></a>
-       <!-- <a href="cat.php"><input type="submit" name="cat" value="Edit Categories" class="btn btn-primary"  ></a> -->
+        <a href="cat.php"><input type="submit" name="cat" value="Edit Categories" class="btn btn-primary"  ></a>
         
 		<br>		<br>
 		<br>
